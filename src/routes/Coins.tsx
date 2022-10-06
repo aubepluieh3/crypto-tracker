@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const Container = styled.div`
   padding: 0px 20px;
   max-width: 480px;
-  margin: 0 atuo;
+  margin: 0 auto;
 `;
 
 const Header = styled.header`
   height: 15vh;
   display: flex;
-  justify-contnet: center;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -23,10 +23,10 @@ const Coin = styled.li`
   border-radius: 15px;
   margin-bottom: 10px;
   a {
-    padding: 20px;
-    transition: color 0.2s ease-in;
     display: flex;
     align-items: center;
+    padding: 20px;
+    transition: color 0.2s ease-in;
   }
   &:hover {
     a {
@@ -99,5 +99,4 @@ function Coins() {
     </Container>
   );
 }
-
 export default Coins;
