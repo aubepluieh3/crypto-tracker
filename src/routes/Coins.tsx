@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+
 
 const Container = styled.div`
   padding: 0px 20px;

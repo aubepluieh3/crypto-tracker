@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Routes, Route, useLocation, useParams, useMatch } from "react-router";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
-import { Link } from "react-router-dom";
 import Chart from "./Chart";
 import Price from "./Price";
+import { Link, Outlet } from "react-router-dom";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -37,6 +36,7 @@ const Overview = styled.div`
   padding: 10px 20px;
   border-radius: 10px;
 `;
+
 const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
@@ -144,6 +144,7 @@ function Coin() {
   const { state } = useLocation() as LocationState;
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
+
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
     () => fetchCoinInfo(coinId)
@@ -153,6 +154,7 @@ function Coin() {
     () => fetchCoinTickers(coinId)
   );
   const loading = infoLoading || tickersLoading;
+
   return (
     <Container>
       <Header>
@@ -192,17 +194,18 @@ function Coin() {
 
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/${coinId}/chart`}>Chart(line)</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-
           <Routes>
-            <Route path="chart" element={<Chart />} />
+            <Route path="chart" element={<Chart coinId={coinId!} />} />
             <Route path="price" element={<Price />} />
           </Routes>
+
+          <Outlet context={{ coinId: coinId }} />
         </>
       )}
     </Container>
