@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { fetchCoinHistory } from "../api";
-import ReactApexChart from "react-apexcharts";
+import ApexChart from "react-apexcharts";
 
 interface IHistorical {
   time_open: string;
@@ -17,15 +17,19 @@ interface ChartProps {
   coinId: string;
 }
 function Chart({ coinId }: ChartProps) {
-  const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
-    fetchCoinHistory(coinId)
+  const { isLoading, data } = useQuery<IHistorical[]>(
+    ["ohlcv", coinId],
+    () => fetchCoinHistory(coinId),
+    {
+      refetchInterval: 10000,
+    }
   );
   return (
     <div>
       {isLoading ? (
         "Loading chart..."
       ) : (
-        <ReactApexChart
+        <ApexChart
           type="line"
           series={[
             {
@@ -56,11 +60,9 @@ function Chart({ coinId }: ChartProps) {
             xaxis: {
               axisBorder: { show: false },
               axisTicks: { show: false },
-              labels: {
-                show: false,
-              },
+              labels: { show: false },
               type: "datetime",
-              categories: data?.map((price) => price.time_close),
+              categories: data?.map((price) => +price.time_close * 1000),
             },
             fill: {
               type: "gradient",
