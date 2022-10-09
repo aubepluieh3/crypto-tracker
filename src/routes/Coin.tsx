@@ -6,6 +6,8 @@ import Chart from "./Chart";
 import Price from "./Price";
 import { Link, Outlet } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -28,6 +30,16 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Button = styled(Link)`
+  position: absolute;
+  left: 0;
+  font-size: 2.2rem;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem;
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Overview = styled.div`
@@ -170,6 +182,9 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
+        <Button to="/">
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </Button>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
