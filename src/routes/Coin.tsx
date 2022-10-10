@@ -11,7 +11,8 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Title = styled.h1`
   font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.orangeColor};
+  font-weight: 800;
 `;
 
 const Loader = styled.span`
@@ -45,7 +46,7 @@ const Button = styled(Link)`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(256, 256, 256, 0.5);
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -81,7 +82,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(256, 256, 256, 0.5);
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
@@ -155,7 +156,45 @@ interface PriceData {
   };
 }
 
-function Coin() {
+export interface TickersInterface {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  circulating_supply: number;
+  total_supply: number;
+  max_supply: number;
+  beta_value: number;
+  first_data_at: string;
+  last_updated: string;
+  quotes: {
+    USD: {
+      ath_date: string;
+      ath_price: number;
+      market_cap: number;
+      market_cap_change_24h: number;
+      percent_change_1h: number;
+      percent_change_1y: number;
+      percent_change_6h: number;
+      percent_change_7d: number;
+      percent_change_12h: number;
+      percent_change_15m: number;
+      percent_change_24h: number;
+      percent_change_30d: number;
+      percent_change_30m: number;
+      percent_from_price_ath: number;
+      price: number;
+      volume_24h: number;
+      volume_24h_change_24h: number;
+    };
+  };
+}
+
+interface ICoinProps {
+  isDark: boolean;
+}
+
+function Coin({ isDark }: ICoinProps) {
   const { coinId } = useParams<keyof RouteParams>() as RouteParams;
   const { state } = useLocation() as LocationState;
   const priceMatch = useMatch("/:coinId/price");
@@ -228,11 +267,13 @@ function Coin() {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path="chart" element={<Chart coinId={coinId!} />} />
+            <Route
+              path="chart"
+              element={<Chart coinId={coinId!} isDark={isDark} />}
+            />
             <Route path="price" element={<Price />} />
           </Routes>
-
-          <Outlet context={{ coinId: coinId }} />
+          <Outlet context={{ coinId }} />
         </>
       )}
     </Container>
