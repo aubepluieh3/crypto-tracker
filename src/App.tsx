@@ -3,9 +3,9 @@ import Router from "./Router";
 import { HelmetProvider } from "react-helmet-async";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { lightTheme, darkTheme } from "./theme";
-import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom } from "./atoms";
+
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
