@@ -120,7 +120,7 @@ function Price({ coinId, tickersData }: PriceProps) {
               </Text>
             </Value>
           </Overview>
-          
+
           <Overview>
             <Tag> Max Change rate in the past day</Tag>
             <Value>
@@ -135,7 +135,7 @@ function Price({ coinId, tickersData }: PriceProps) {
           </Overview>
 
           <Overview>
-            <Tag> 30 Minutes</Tag>
+            <Tag> 30 minutes</Tag>
             <Value>
               <Text
                 isPositive={
