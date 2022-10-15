@@ -8,6 +8,9 @@ import { Link, Outlet } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
+import { darkTheme, lightTheme } from "../theme";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -40,7 +43,7 @@ const Button = styled(Link)`
   display: flex;
   align-items: center;
   padding: 0.8rem;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.bgColor};
 `;
 
 const Overview = styled.div`
@@ -190,9 +193,7 @@ export interface TickersInterface {
   };
 }
 
-interface ICoinProps {
-
-}
+interface ICoinProps {}
 
 function Coin({}: ICoinProps) {
   const { coinId } = useParams<keyof RouteParams>() as RouteParams;
@@ -212,7 +213,8 @@ function Coin({}: ICoinProps) {
     }
   );
   const loading = infoLoading || tickersLoading;
-
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
   return (
     <Container>
       <Helmet>
@@ -221,7 +223,7 @@ function Coin({}: ICoinProps) {
         </title>
       </Helmet>
       <Header>
-        <Button to="/">
+        <Button to="/" theme={isDark ? lightTheme : darkTheme}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </Button>
         <Title>
@@ -267,11 +269,11 @@ function Coin({}: ICoinProps) {
             </Tab>
           </Tabs>
           <Routes>
+            <Route path="chart" element={<Chart coinId={coinId!} />} />
             <Route
-              path="chart"
-              element={<Chart coinId={coinId!} />}
+              path="price"
+              element={<Price coinId={coinId!} tickersData={tickersData} />}
             />
-            <Route path="price" element={<Price />} />
           </Routes>
           <Outlet context={{ coinId }} />
         </>

@@ -3,6 +3,22 @@ import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import { isDarkAtom } from "../atoms";
 import { useRecoilValue } from "recoil";
+import styled, { keyframes } from "styled-components";
+
+const boxAnimation = keyframes`
+  0% {
+    transform: none;
+    opacity: 0;
+  }
+  1% {
+    transform: translateY(-5px);
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+`;
 
 interface IHistorical {
   time_open: string;
@@ -19,6 +35,10 @@ interface ChartProps {
   coinId: string;
 }
 
+const Container = styled.div`
+  animation: ${boxAnimation} 1s ease-in-out;
+`;
+
 function Chart({ coinId }: ChartProps) {
   const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<IHistorical[]>(
@@ -29,7 +49,7 @@ function Chart({ coinId }: ChartProps) {
     }
   );
   return (
-    <div>
+    <Container>
       {isLoading ? (
         "Loading chart..."
       ) : (
@@ -81,8 +101,11 @@ function Chart({ coinId }: ChartProps) {
           }}
         />
       )}
-    </div>
+    </Container>
   );
 }
 
 export default Chart;
+function translateY(arg0: number, px: any) {
+  throw new Error("Function not implemented.");
+}

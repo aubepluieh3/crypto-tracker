@@ -36,10 +36,11 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
+  background-color: ${(props) => props.theme.basicColor};
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
+  font-weight: bold;
   a {
     display: flex;
     align-items: center;
