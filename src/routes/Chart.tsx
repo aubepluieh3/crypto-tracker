@@ -36,7 +36,7 @@ interface ChartProps {
 }
 
 const Container = styled.div`
-  animation: ${boxAnimation} 1s ease-in-out;
+  animation: ${boxAnimation} 3s ease-in-out;
 `;
 
 function Chart({ coinId }: ChartProps) {
