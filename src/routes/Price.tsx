@@ -120,6 +120,7 @@ function Price({ coinId, tickersData }: PriceProps) {
               </Text>
             </Value>
           </Overview>
+          
           <Overview>
             <Tag> Max Change rate in the past day</Tag>
             <Value>

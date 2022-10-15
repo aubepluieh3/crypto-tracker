@@ -3,7 +3,7 @@ import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import { isDarkAtom } from "../atoms";
 import { useRecoilValue } from "recoil";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, useTheme } from "styled-components";
 
 const boxAnimation = keyframes`
   0% {
@@ -36,7 +36,7 @@ interface ChartProps {
 }
 
 const Container = styled.div`
-  animation: ${boxAnimation} 3s ease-in-out;
+  animation: ${boxAnimation} 2s linear forwards;
 `;
 
 function Chart({ coinId }: ChartProps) {
@@ -48,64 +48,75 @@ function Chart({ coinId }: ChartProps) {
       refetchInterval: 10000,
     }
   );
+  const theme = useTheme();
   return (
     <Container>
       {isLoading ? (
         "Loading chart..."
       ) : (
-        <ApexChart
-          type="line"
-          series={[
-            {
-              name: "Price",
-              data: data?.map((price) => price.close) as number[],
-            },
-          ]}
-          options={{
-            theme: {
-              mode: isDark ? "dark" : "light",
-            },
-            chart: {
-              height: 300,
-              width: 500,
-              toolbar: {
+        <>
+          <ApexChart
+            type="line"
+            series={[
+              {
+                name: "Price",
+                data: data?.map((price) => price.close) as number[],
+              },
+            ]}
+            options={{
+              noData: {
+                text: "No Chart Data",
+                align: "center",
+                verticalAlign: "middle",
+                offsetX: 0,
+                offsetY: 0,
+                style: {
+                  color: theme.textColor,
+                  fontSize: "16px",
+                },
+              },
+              theme: {
+                mode: isDark ? "dark" : "light",
+              },
+              chart: {
+                height: 300,
+                width: 500,
+                toolbar: {
+                  show: false,
+                },
+                background: "transparent",
+              },
+              grid: { show: false },
+              stroke: {
+                curve: "smooth",
+                width: 4,
+              },
+              yaxis: {
                 show: false,
               },
-              background: "transparent",
-            },
-            grid: { show: false },
-            stroke: {
-              curve: "smooth",
-              width: 4,
-            },
-            yaxis: {
-              show: false,
-            },
-            xaxis: {
-              axisBorder: { show: false },
-              axisTicks: { show: false },
-              labels: { show: false },
-              type: "datetime",
-              categories: data?.map((price) => +price.time_close * 1000),
-            },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
-            },
-            colors: ["#0fbcf9"],
-            tooltip: {
-              y: {
-                formatter: (value) => `$${value.toFixed(2)}`,
+              xaxis: {
+                axisBorder: { show: false },
+                axisTicks: { show: false },
+                labels: { show: false },
+                type: "datetime",
+                categories: data?.map((price) => +price.time_close * 1000),
               },
-            },
-          }}
-        />
+              fill: {
+                type: "gradient",
+                gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+              },
+              colors: ["#0fbcf9"],
+              tooltip: {
+                y: {
+                  formatter: (value) => `$${value.toFixed(2)}`,
+                },
+              },
+            }}
+          />
+        </>
       )}
     </Container>
   );
 }
 
 export default Chart;
-function translateY(arg0: number, px: any) {
-  throw new Error("Function not implemented.");
-}
