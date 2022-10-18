@@ -6,7 +6,7 @@ interface IRouterProps {}
 
 function Router({}: IRouterProps) {
   return (
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <Routes>
         <Route path=":coinId/*" element={<Coin />}></Route>
         <Route path="/" element={<Coins />}></Route>
