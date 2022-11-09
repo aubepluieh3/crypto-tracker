@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/aubepluieh3.github.io/crypto-tracker/static/js/main.719dbce5.js",
+    "main.js": "/aubepluieh3.github.io/crypto-tracker/static/js/main.e42bbd48.js",
     "index.html": "/aubepluieh3.github.io/crypto-tracker/index.html",
-    "main.719dbce5.js.map": "/aubepluieh3.github.io/crypto-tracker/static/js/main.719dbce5.js.map"
+    "main.e42bbd48.js.map": "/aubepluieh3.github.io/crypto-tracker/static/js/main.e42bbd48.js.map"
   },
   "entrypoints": [
-    "static/js/main.719dbce5.js"
+    "static/js/main.e42bbd48.js"
   ]
 }
